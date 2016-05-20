@@ -7,14 +7,13 @@
 #include <memory>
 #include "afxwin.h"
 #include "afxvslistbox.h"
-#include "../PsiCommon/TestManager.h"
 #include "QuestionListBox.h"
 #include "afxeditbrowsectrl.h"
 #include "ChoiceList.h"
 #include "GroupList.h"
 
-class PsiScale;
-class PsiScaleQuestion;
+class CPsiScale;
+class CPsiScaleQuestion;
 
 
 // CPsiScaleEditorDlg 对话框
@@ -35,8 +34,7 @@ public:
 // 实现
 protected:
 	HICON m_hIcon;
-	std::shared_ptr<PsiScale> _scale;
-	CTestManager _test_manager;
+	std::shared_ptr<CPsiScale> _scale;
 
 	// 生成的消息映射函数
 	virtual BOOL OnInitDialog();
@@ -60,7 +58,7 @@ public:
 
 	void UpdateScale();
 	void ClearLists();
-	CString GetScalePath(const PsiScale& scale);
+	CString GetScalePath(const CPsiScale& scale);
 
 	afx_msg void OnBnClickedButtonAddQuestion();
 	afx_msg void OnLbnSelchangeListQuestions();

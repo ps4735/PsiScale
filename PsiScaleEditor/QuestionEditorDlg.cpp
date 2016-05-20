@@ -6,7 +6,7 @@
 #include "PsiScaleEditor.h"
 #include "QuestionEditorDlg.h"
 #include "afxdialogex.h"
-#include "../PsiCommon/TestManager.h"
+#include "../PsiCommon/PsiScale.h"
 #include "InputStringDialog.h"
 
 #ifdef _DEBUG
@@ -15,7 +15,7 @@
 
 using namespace std;
 
-CQuestionEditorDlg::CQuestionEditorDlg(shared_ptr<PsiScale> scale, CWnd* pParent /*=NULL*/)
+CQuestionEditorDlg::CQuestionEditorDlg(shared_ptr<CPsiScale> scale, CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_QUESTION_EDITOR, pParent)
 	, _question_text(_T(""))
 	, _scale(scale)
@@ -207,7 +207,7 @@ HCURSOR CQuestionEditorDlg::OnQueryDragIcon()
 
 void CQuestionEditorDlg::OnBnClickedButtonNew()
 {
-	PsiScaleQuestion new_question;
+	CPsiScaleQuestion new_question;
 
 	_scale->AddQuestion(new_question);
 	_current_question = _scale->GetQuestionCount() - 1;
@@ -226,17 +226,25 @@ void CQuestionEditorDlg::UpdateUi()
 
 	_question_text = question.GetText();
 	_reverse_score = question.GetReverseScore();
-	_group_combo.SelectString(0, question.GetGroup());
+	if (_group_combo.SelectString(0, question.GetGroup()) == CB_ERR)
+	{
+		_group_combo.SetCurSel(CB_ERR);
+	}
 
 	if (!_scale->IsSameChoice())
 	{
+		while (_choice_list.GetCount() > 0)
+		{
+			_choice_list.RemoveItem(0);
+		}
+
 		// 更新当前问题的选择。
 		for (auto choice : question.Choices())
 		{
 			_choice_list.AddItem(choice.text, choice.id);
 		}
 	}
-	_next_button.EnableWindow(_current_question < _scale->GetQuestionCount() - 1);
+	_next_button.EnableWindow(_current_question < int(_scale->GetQuestionCount()) - 1);
 	_prev_button.EnableWindow(_current_question > 0);
 
 	_question_number.Format(_T("%d / %d"), _current_question + 1, _scale->GetQuestionCount());

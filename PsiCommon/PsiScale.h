@@ -6,17 +6,17 @@
 #include <afxstr.h>
 #include <memory>
 
-struct QuestionChoice
+struct CQuestionChoice
 {
 	unsigned int id;
 	CString text;
 };
 
-class PsiScaleQuestion
+class CPsiScaleQuestion
 {
 public:
-	PsiScaleQuestion();
-	PsiScaleQuestion(unsigned id, const CString& text, bool reverse_score, const CString& group);
+	CPsiScaleQuestion();
+	CPsiScaleQuestion(unsigned id, const CString& text, bool reverse_score, const CString& group);
 
 	void SetId(unsigned id);
 	unsigned GetId() const;
@@ -27,20 +27,23 @@ public:
 	void SetGroup(const CString& group);
 	const CString& GetGroup() const;
 
-	std::vector<QuestionChoice>& Choices();
+	std::vector<CQuestionChoice>& Choices();
 private:
 	unsigned _id;
 	CString _text;
 	bool _reverse_score;
 	CString _group;
-	std::vector<QuestionChoice> _choices;
+	std::vector<CQuestionChoice> _choices;
 };
 
-class PsiScale
+class CPsiScale
 {
 public:
-	PsiScale();
-	PsiScale(unsigned id, const TCHAR* name, const TCHAR* description, const TCHAR* prologue, bool samechoice);
+	CPsiScale();
+	CPsiScale(unsigned id, const TCHAR* name, const TCHAR* description, const TCHAR* prologue, bool samechoice);
+
+	bool Load(const CString& file_path);
+	bool Save(const CString& file_path);
 
 	void SetId(unsigned id);
 	unsigned GetId() const;
@@ -56,16 +59,17 @@ public:
 	unsigned int GetGroupCount() const;
 	std::vector<CString>& Groups();
 
-	void AddQuestion(const PsiScaleQuestion& question);
+	void AddQuestion(const CPsiScaleQuestion& question);
 	void DeleteQuestion(unsigned int index);
-	const PsiScaleQuestion& GetQuestion(unsigned int index) const;
-	PsiScaleQuestion& Question(unsigned index);
+	const CPsiScaleQuestion& GetQuestion(unsigned int index) const;
+	CPsiScaleQuestion& Question(unsigned index);
 	unsigned int GetQuestionCount() const;
 
-	bool Save(const CString& file_path);
 	const bool IsSameChoice() const;
 	void SetSameChoice(bool samechoice);;
-	std::vector<QuestionChoice>& Choices();
+	std::vector<CQuestionChoice>& Choices();
+
+	void Reset();
 private:
 	unsigned _id;
 	CString _name;
@@ -73,8 +77,8 @@ private:
 	CString _prologue;
 
 	std::vector<CString> _groups;
-	std::vector<PsiScaleQuestion> _questions;
-	std::vector<QuestionChoice> _choices;
+	std::vector<CPsiScaleQuestion> _questions;
+	std::vector<CQuestionChoice> _choices;
 
 	bool _same_choice;
 };
@@ -84,21 +88,3 @@ struct Score
 	CString id;
 	CString answer;
 };
-
-class CTestManager
-{
-public:
-	CTestManager();
-	~CTestManager();
-
-	std::shared_ptr<PsiScale> LoadPsiScale(const CString& file_path);
-	bool SavePsiScale(const CString& file_path, PsiScale& scale);
-
-	bool AddScale(std::shared_ptr<PsiScale> scale);
-
-
-	PsiScale & GetPsiScale(unsigned id);
-protected:
-	std::map<unsigned, std::shared_ptr<PsiScale>> _scales;
-};
-

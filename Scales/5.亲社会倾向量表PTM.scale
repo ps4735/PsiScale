@@ -1,0 +1,49 @@
+<PsycologyTest Id="5" Name="亲社会倾向量表PTM" SameChoices="1">
+<Choices>
+<Item Id="1">非常不像我</Item>
+<Item Id="2">比较不像我</Item>
+<Item Id="3">一般</Item>
+<Item Id="4">比较像我</Item>
+<Item Id="5">非常像我</Item>
+</Choices>
+<Prologue>以下是一些句子，这些句子描述的内容可能像您，也可能不像您。请衡量一下，看看每个句子在多大程度上描述了您。
+有五种情况：“1”代表非常不像我、“2”代表比较不像我、“3”代表一般、“4”代表比较像我、“5”代表非常像我。
+请在代表最符合您情况的数字上打“√”，以表明您对这句话的同意程度。
+本量表需在3分钟内完成。</Prologue>
+<Groups>
+<Item>公开的</Item>
+<Item>匿名的</Item>
+<Item>利他的</Item>
+<Item>依从的</Item>
+<Item>情绪的</Item>
+<Item>紧急的</Item>
+</Groups>
+<Questions>
+<Item Id="1" ReverseScore="0" SubScale="公开的">有人在场时，我会竭尽全力帮助别人。</Item>
+<Item Id="2" ReverseScore="0" SubScale="情绪的">当我能安慰一个情绪不好的人时，我感觉非常好。</Item>
+<Item Id="3" ReverseScore="0" SubScale="依从的">当别人请我帮忙时，我很少拒绝。</Item>
+<Item Id="4" ReverseScore="0" SubScale="公开的">有人围观的情况下，我更愿意帮助别人。</Item>
+<Item Id="5" ReverseScore="0" SubScale="紧急的">我倾向于帮助那些真正遇到麻烦急需帮助的人。</Item>
+<Item Id="6" ReverseScore="0" SubScale="公开的">在很多公众场合中我更愿意帮助别人。</Item>
+<Item Id="7" ReverseScore="0" SubScale="依从的">当别人请我帮忙时，我会毫不犹豫地帮助他们。</Item>
+<Item Id="8" ReverseScore="0" SubScale="匿名的">我更愿意在匿名的情况下捐款。</Item>
+<Item Id="9" ReverseScore="0" SubScale="紧急的">我倾向于帮助那些严重受伤或患病的人。</Item>
+<Item Id="10" ReverseScore="0" SubScale="利他的">我捐钱捐物不是为了能从中有所获益。</Item>
+<Item Id="11" ReverseScore="0" SubScale="依从的">别人求我帮忙时，我会很快放下手头的事去帮助他。</Item>
+<Item Id="12" ReverseScore="0" SubScale="匿名的">我倾向于帮助那些需要帮助的人而不留名。</Item>
+<Item Id="13" ReverseScore="0" SubScale="情绪的">我倾向于帮助别人，尤其是当对方情绪波动的时候。</Item>
+<Item Id="14" ReverseScore="0" SubScale="公开的">在有人看着的情况下，我会竭尽所能帮助他人。</Item>
+<Item Id="15" ReverseScore="0" SubScale="紧急的">当别人处于饥寒交迫时，我会很自然为他们提供帮助。</Item>
+<Item Id="16" ReverseScore="0" SubScale="匿名的">大多数情况下，我帮助别人不留名。</Item>
+<Item Id="17" ReverseScore="0" SubScale="利他的">我投身志愿服务付出时间精力，不是为了获得更多回报。</Item>
+<Item Id="18" ReverseScore="0" SubScale="情绪的">我在他人情绪激动的情境中更有可能去尽力帮助他们。</Item>
+<Item Id="19" ReverseScore="0" SubScale="依从的">当别人要求我帮助他们时，我从不拖延。</Item>
+<Item Id="20" ReverseScore="0" SubScale="匿名的">我认为在当事人不知道的情况下给予帮助是最好的。</Item>
+<Item Id="21" ReverseScore="0" SubScale="情绪的">在让人情绪激动的情境下，我更想去帮助那些需要帮助的人。</Item>
+<Item Id="22" ReverseScore="0" SubScale="匿名的">我常在别人不知道的情况下做些捐助，因为这样让我感觉很好。</Item>
+<Item Id="23" ReverseScore="0" SubScale="利他的">我帮助别人不是为了将来他们相应的回报我。</Item>
+<Item Id="24" ReverseScore="0" SubScale="依从的">当别人提出要我帮忙时，我会尽我所能的帮助他们。</Item>
+<Item Id="25" ReverseScore="0" SubScale="利他的">我经常帮助别人，即使从中得不到任何好处。</Item>
+<Item Id="26" ReverseScore="0" SubScale="情绪的">当别人心情很不好的时候，我常常帮助他们。</Item>
+</Questions>
+</PsycologyTest>

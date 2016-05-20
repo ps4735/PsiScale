@@ -1,0 +1,34 @@
+<PsycologyTest Id="12" Name="自我意识量表SCS" SameChoices="1">
+<Choices>
+<Item Id="1">1 完全不符合</Item>
+<Item Id="2">2 不太符合</Item>
+<Item Id="3">3 说不清</Item>
+<Item Id="4">4 比较符合</Item>
+<Item Id="5">5 非常符合</Item>
+</Choices>
+<Prologue>所谓“自我意识”，乃是对自己存在觉察，即自己认识自我的一切，包括自我的生理状况、心理特征和人际关系，简言之，自我意识就是对自己个人身心活动的觉察。下面的量表是心理学 Feningstein、Scheier 和 Buss在1975年编制的“自我意识量表”（Self Consiousness Scale,简称SCS.)请根据每一个陈述与自己实际情况的符合程度，在你认为合适的数字框内打“√”。</Prologue>
+<Groups>
+<Item>内在自我</Item>
+<Item>公众自我</Item>
+</Groups>
+<Questions>
+<Item Id="1" ReverseScore="0">我经常试图描述自己</Item>
+<Item Id="2" ReverseScore="0">我关心自己做事的方式</Item>
+<Item Id="3" ReverseScore="0">总的来说，我对自己是什么样的人不太清楚</Item>
+<Item Id="4" ReverseScore="0">我经常反省自己</Item>
+<Item Id="5" ReverseScore="0">我关心自己的表现方式</Item>
+<Item Id="6" ReverseScore="0">我能决定自己的命运</Item>
+<Item Id="7" ReverseScore="0">我从不检讨自己</Item>
+<Item Id="8" ReverseScore="0">我对自己是什么样的人很在意</Item>
+<Item Id="9" ReverseScore="0">我很关心自己的内在感受</Item>
+<Item Id="10" ReverseScore="0">我常常担心我是否给别人留下一个好印象</Item>
+<Item Id="11" ReverseScore="0">我常常考察自己的动机</Item>
+<Item Id="12" ReverseScore="0">离开家时，我常常照镜子</Item>
+<Item Id="13" ReverseScore="0">有时，我有一种自己在看着自己的感受</Item>
+<Item Id="14" ReverseScore="0">我关心他人看我的方式</Item>
+<Item Id="15" ReverseScore="0">我对自己的心情变化很敏感</Item>
+<Item Id="16" ReverseScore="0">我对自己的外表很关注</Item>
+<Item Id="17" ReverseScore="0">当解决问题时，我清楚自己的心理</Item>
+<Item Id="18" ReverseScore="0"/>
+</Questions>
+</PsycologyTest>

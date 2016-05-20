@@ -6,11 +6,11 @@
 #include "PsiScaleEditor.h"
 #include "PsiScaleEditorDlg.h"
 #include "afxdialogex.h"
-#include "../PsiCommon/TestManager.h"
+#include "../PsiCommon/PsiScale.h"
 #include "InputStringDialog.h"
 #include "../Utilities/FileSystem.h"
 #include "QuestionEditorDlg.h"
-
+#include <algorithm>
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -18,6 +18,10 @@
 using namespace std;
 using namespace FileSystem;
 
+bool IsShort(const CString& s1, const CString& s2)
+{
+	return (_ttoi(s1.Left(s1.Find(_T("."))).GetBuffer()) < _ttoi(s2.Left(s2.Find(_T("."))).GetBuffer()));
+}
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
 class CAboutDlg : public CDialogEx
@@ -220,7 +224,7 @@ void CPsiScaleEditorDlg::OnBnClickedCheckSameChoice()
 	_choice_list.EnableWindow(_use_same_choices);
 }
 
-CString CPsiScaleEditorDlg::GetScalePath(const PsiScale& scale)
+CString CPsiScaleEditorDlg::GetScalePath(const CPsiScale& scale)
 {
 	CString path = _working_folder + _T("\\");
 	path.Format(path + _T("%d.%s.scale"), scale.GetId(), scale.GetName());
@@ -235,7 +239,7 @@ void CPsiScaleEditorDlg::OnBnClickedButtonNew()
 		UpdateScaleComboCurrentItem();
 		_scale->Save(GetScalePath(*_scale));
 	}
-	_scale = shared_ptr<PsiScale>(new PsiScale);
+	_scale = shared_ptr<CPsiScale>(new CPsiScale);
 	_scales_combo.AddString(_T("新建量表"));
 	_scales_combo.SelectString(0, _T("新建量表"));
 
@@ -266,7 +270,7 @@ void CPsiScaleEditorDlg::OnBnClickedButtonAddQuestion()
 {
 	ASSERT(_scale);
 
-	PsiScaleQuestion new_question;
+	CPsiScaleQuestion new_question;
 	_scale->AddQuestion(new_question);
 	_question_list.AddItem(_T("新题目"));
 
@@ -420,7 +424,7 @@ void CPsiScaleEditorDlg::OnBnClickedButtonSave()
 		}
 	}
 
-	_test_manager.SavePsiScale(GetScalePath(*_scale), *_scale);
+	_scale->Save(GetScalePath(*_scale));
 	UpdateScaleComboCurrentItem();
 }
 
@@ -435,10 +439,15 @@ void CPsiScaleEditorDlg::OnEnChangeEditWorkingFolder()
 	UpdateData();
 	if (::FileExists(_working_folder))
 	{
-		::ForEachFile(_working_folder, _T("*.scale"), false, [this](const CString& file) {
+		std::vector<CString> files;
+		::ForEachFile(_working_folder, _T("*.scale"), false, [&](const CString& file) {
 			CString filename = ::GetFileNameFromPath(file);
-			this->_scales_combo.AddString(filename);
+			files.push_back(filename);
 		});
+
+		std::sort(files.begin(), files.end(), IsShort);
+		std::for_each(files.begin(), files.end(), [this](CString item){
+			_scales_combo.AddString(item); });
 
 		if (_scales_combo.GetCount() > 0)
 		{
@@ -466,7 +475,20 @@ void CPsiScaleEditorDlg::OnCbnSelchangeComboScales()
 	CString selected_text;
 	_scales_combo.GetLBText(_scales_combo.GetCurSel(), selected_text);
 	CString file_path = _working_folder + _T("\\") + selected_text + _T(".scale");
-	_scale = _test_manager.LoadPsiScale(file_path);
+
+	if (!_scale)
+	{
+		try
+		{
+			_scale = shared_ptr<CPsiScale>(new CPsiScale);
+		}
+		catch (CMemoryException* )
+		{
+			return;
+		}
+	}
+
+	_scale->Load(file_path);
 
 	if (!_scale)
 	{

@@ -1,0 +1,36 @@
+<PsycologyTest Id="24" Name="基本共情量表BES" SameChoices="1">
+<Choices>
+<Item Id="1">1.完全不同意</Item>
+<Item Id="2">2.基本不同意</Item>
+<Item Id="3">3.不确定</Item>
+<Item Id="4">4.基本同意</Item>
+<Item Id="5">5.完全同意</Item>
+</Choices>
+<Prologue>下面的情况可能适合或不适合你。请在每一种状态后勾选（√）出符合你情况的那一格，以表明你的赞同或反对程度。请根据实际情况回答。</Prologue>
+<Groups>
+<Item>情感共情</Item>
+<Item>认知共情</Item>
+</Groups>
+<Questions>
+<Item Id="1" ReverseScore="0" SubScale="情感共情">朋友的情绪对我影响不大。</Item>
+<Item Id="2" ReverseScore="0" SubScale="情感共情">和情绪忧伤的朋友相处后，自己也经常感到忧伤。</Item>
+<Item Id="3" ReverseScore="0" SubScale="认知共情">当朋友表现优异，取得成绩时，我能体会他/她的喜悦。</Item>
+<Item Id="4" ReverseScore="0" SubScale="情感共情">看到恐怖片中的一些镜头时，我会感到害怕。</Item>
+<Item Id="5" ReverseScore="0" SubScale="情感共情">我很容易受到别人情绪的感染。</Item>
+<Item Id="6" ReverseScore="1" SubScale="认知共情">朋友受到惊吓时，我很难察觉到。</Item>
+<Item Id="7" ReverseScore="1" SubScale="情感共情">看到有人哭泣时，我不会难过。</Item>
+<Item Id="8" ReverseScore="1" SubScale="情感共情">他人的情绪根本不会对我造成任何干扰。</Item>
+<Item Id="9" ReverseScore="0" SubScale="认知共情">当某人情绪低落时，我一般能够察觉到。</Item>
+<Item Id="10" ReverseScore="0" SubScale="认知共情">当朋友受到惊吓时，我一般能够察觉到。</Item>
+<Item Id="11" ReverseScore="0" SubScale="情感共情">在看到电视或电影中的悲伤情景时，我常常会随之感伤。</Item>
+<Item Id="12" ReverseScore="0" SubScale="认知共情">一般在人们诉说自己的心情之前，我便能察觉到他们的情绪。</Item>
+<Item Id="13" ReverseScore="1" SubScale="情感共情">看到他人被激怒时，我的情绪不会受到影响。</Item>
+<Item Id="14" ReverseScore="0" SubScale="认知共情">当他人高兴时，我一般能察觉到。</Item>
+<Item Id="15" ReverseScore="0" SubScale="情感共情">和我一起的朋友感到害怕时，我也会感到害怕。</Item>
+<Item Id="16" ReverseScore="0" SubScale="认知共情">我能很快意识到朋友生气了。</Item>
+<Item Id="17" ReverseScore="0" SubScale="情感共情">我常常会卷入朋友的情绪中去。</Item>
+<Item Id="18" ReverseScore="1" SubScale="情感共情">朋友的低落情绪对我没什么影响。</Item>
+<Item Id="19" ReverseScore="1" SubScale="认知共情">我常常察觉不到朋友的情绪感受。</Item>
+<Item Id="20" ReverseScore="1" SubScale="认知共情">当朋友高兴时，我很难察觉到。</Item>
+</Questions>
+</PsycologyTest>

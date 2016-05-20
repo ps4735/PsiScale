@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AnswerManager.h"
+#include "..\PsiCommon\PsiScale.h"
 
 
 CAnswerManager::CAnswerManager()
@@ -53,4 +54,27 @@ void CAnswerManager::SetSubjectId(const TCHAR* subject_id)
 const CString& CAnswerManager::GetSubjectId() const
 {
 	return _subject_id;
+}
+
+/**
+@return 如果所有的问题都已经回答，返回-1；否则返回第一个没有回答的题目的索引
+*/
+
+int CAnswerManager::CheckForUnansweredQuestion(CPsiScale& scale)
+{
+	auto iter = _answers.find(scale.GetId());
+	if (iter == _answers.end())
+		return 0;
+
+	auto& answers = iter->second;
+	if (answers.size() == scale.GetQuestionCount())
+		return -1;
+
+	for (int i = 0; i < int(scale.GetQuestionCount()); ++i)
+	{
+		if (answers.find(i) == answers.end())
+			return i;
+	}
+
+	return -1;
 }

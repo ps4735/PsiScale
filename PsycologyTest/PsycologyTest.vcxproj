@@ -28,7 +28,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -187,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnswerManager.h" />
+    <ClInclude Include="LogonDialog.h" />
     <ClInclude Include="PsycologyTest.h" />
     <ClInclude Include="PsycologyTestDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -194,9 +195,12 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestOverviewDialog.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="UserManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnswerManager.cpp" />
+    <ClCompile Include="LogonDialog.cpp" />
     <ClCompile Include="PsycologyTest.cpp" />
     <ClCompile Include="PsycologyTestDlg.cpp" />
     <ClCompile Include="ScaleList.cpp" />
@@ -207,6 +211,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TestOverviewDialog.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PsycologyTest.rc" />
@@ -219,7 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="ScoreTemplate.xml" />
-    <Xml Include="TestTemplate.xml" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="res\PsycolgyTest.manifest" />

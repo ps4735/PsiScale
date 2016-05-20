@@ -6,6 +6,8 @@
 #include "PsycologyTest.h"
 #include "PsycologyTestDlg.h"
 #include "afxdialogex.h"
+#include "../PsiCommon/PsiScale.h"
+#include "afxwin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,15 +43,32 @@ public:
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	CString _user_name;
+	CString _password;
+	CString _password2;
+	CStatic _confirm_password_label;
+	CEdit _password2_edit;
+	BOOL _first_time;
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
+, _user_name(_T(""))
+, _password(_T(""))
+, _password2(_T(""))
+, _first_time(FALSE)
 {
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT_NAME, _user_name);
+	DDX_Text(pDX, IDC_EDIT_PASSWORD, _password);
+	DDX_Text(pDX, IDC_EDIT_PASSWORD2, _password2);
+	DDX_Control(pDX, IDC_PASSWORD_LABEL, _confirm_password_label);
+	DDX_Control(pDX, IDC_EDIT_PASSWORD2, _password2_edit);
+	DDX_Check(pDX, IDC_CHECK_FIRST_TIME, _first_time);
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
@@ -59,7 +78,7 @@ END_MESSAGE_MAP()
 // CPsycologyTestDlg dialog
 
 
-CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<PsiScale> scale, 
+CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<CPsiScale> scale, 
 	CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_PSYCOLOGYTEST_DIALOG, pParent),
 	_psi_scale(scale),
@@ -185,8 +204,7 @@ HCURSOR CPsycologyTestDlg::OnQueryDragIcon()
 
 bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 {
-	if (_psi_scale == nullptr)
-		return false;
+	ASSERT(_psi_scale);
 
 	if (question_index >= _psi_scale->GetQuestionCount())
 		return false;
@@ -303,6 +321,30 @@ void CPsycologyTestDlg::ProcessAnswer(unsigned int answer)
 	{
 		ShowQuestion(_current_question_index + 1);
 	}
+	else
+	{
+		int unanswer_question = _answer_manager.CheckForUnansweredQuestion(*_psi_scale);
+		if (unanswer_question == -1)
+		{
+			if (AfxMessageBox(_T("您已经完成了该问卷，点击“确认”按钮返回。"), MB_OKCANCEL) ==
+				IDOK)
+			{
+				__super::OnOK();
+			}
+		}
+		else
+		{
+			if (AfxMessageBox(_T("还有尚未回答的问题，点击“确认”跳转到问题。"),
+				MB_OKCANCEL) == IDOK)
+			{
+				ShowQuestion(unanswer_question);
+			}
+			else
+			{
+				__super::OnOK();
+			}
+		}
+	}
 }
 
 void CPsycologyTestDlg::OnBnClickedButton1()
@@ -347,7 +389,6 @@ void CPsycologyTestDlg::AdjustSize(int last_button)
 	auto button = GetDlgItem(last_button);
 	if (button == nullptr)
 		return;
-
 
 	button->GetWindowRect(&button_rect);
 	ScreenToClient(&button_rect);

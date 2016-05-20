@@ -4,17 +4,18 @@
 
 #pragma once
 
-#include "../PsiCommon/TestManager.h"
 #include "afxwin.h"
 #include <memory>
 #include "AnswerManager.h"
+
+class CPsiScale;
 
 // CPsycologyTestDlg dialog
 class CPsycologyTestDlg : public CDialogEx
 {
 // Construction
 public:
-	CPsycologyTestDlg(std::shared_ptr<PsiScale> scale, CWnd* pParent = NULL);	// standard constructor
+	CPsycologyTestDlg(std::shared_ptr<CPsiScale> scale, CWnd* pParent = NULL);	// standard constructor
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -28,9 +29,8 @@ public:
 // Implementation
 protected:
 	HICON m_hIcon;
-	CTestManager _test_manager;
 	CAnswerManager _answer_manager;
-	std::shared_ptr<PsiScale> _psi_scale;
+	std::shared_ptr<CPsiScale> _psi_scale;
 	unsigned _current_question_index;
 
 	// Generated message map functions

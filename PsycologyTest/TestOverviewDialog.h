@@ -4,16 +4,18 @@
 #include "ScaleList.h"
 #include <memory>
 
-class PsiScale;
+class CPsiScale;
+class CUser;
+
 // CTestOverviewDialog dialog
 
-class CTestOverviewDialog : public CDialogEx
+class CScaleOverviewDialog : public CDialogEx
 {
-	DECLARE_DYNAMIC(CTestOverviewDialog)
+	DECLARE_DYNAMIC(CScaleOverviewDialog)
 
 public:
-	CTestOverviewDialog(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CTestOverviewDialog();
+	CScaleOverviewDialog(CUser& user, CWnd* pParent = NULL);   // standard constructor
+	virtual ~CScaleOverviewDialog();
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
@@ -37,7 +39,8 @@ public:
 	virtual void OnCancel() override;
 
 	CScaleList _scale_list;
-	std::shared_ptr<PsiScale> _scale;
+	std::shared_ptr<CPsiScale> _scale;
+	CUser& _user;
 
 	afx_msg void OnBnClickedStart();
 };

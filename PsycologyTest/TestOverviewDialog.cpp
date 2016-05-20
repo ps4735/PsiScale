@@ -6,25 +6,28 @@
 #include "TestOverviewDialog.h"
 #include "afxdialogex.h"
 #include "../Utilities/FileSystem.h"
-#include "../PsiCommon/TestManager.h"
+#include "../PsiCommon/PsiScale.h"
 #include "PsycologyTestDlg.h"
+
+using namespace std;
 
 // CTestOverviewDialog dialog
 
-IMPLEMENT_DYNAMIC(CTestOverviewDialog, CDialogEx)
+IMPLEMENT_DYNAMIC(CScaleOverviewDialog, CDialogEx)
 
-CTestOverviewDialog::CTestOverviewDialog(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_DIALOG_OVERVIEW, pParent)
-	, _working_folder(_T(""))
-{
-
-}
-
-CTestOverviewDialog::~CTestOverviewDialog()
+CScaleOverviewDialog::CScaleOverviewDialog(CUser& user, 
+	CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_DIALOG_OVERVIEW, pParent),
+	_user(user),
+	_working_folder(_T(""))
 {
 }
 
-void CTestOverviewDialog::DoDataExchange(CDataExchange* pDX)
+CScaleOverviewDialog::~CScaleOverviewDialog()
+{
+}
+
+void CScaleOverviewDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT_WORKING_FOLDER, _working_folder_edit);
@@ -33,16 +36,16 @@ void CTestOverviewDialog::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CTestOverviewDialog, CDialogEx)
-	ON_EN_CHANGE(IDC_EDIT_WORKING_FOLDER, &CTestOverviewDialog::OnEnChangeEditWorkingFolder)
-	ON_BN_CLICKED(IDC_START, &CTestOverviewDialog::OnBnClickedStart)
+BEGIN_MESSAGE_MAP(CScaleOverviewDialog, CDialogEx)
+	ON_EN_CHANGE(IDC_EDIT_WORKING_FOLDER, &CScaleOverviewDialog::OnEnChangeEditWorkingFolder)
+	ON_BN_CLICKED(IDC_START, &CScaleOverviewDialog::OnBnClickedStart)
 END_MESSAGE_MAP()
 
 
 // CTestOverviewDialog message handlers
 
 
-void CTestOverviewDialog::OnEnChangeEditWorkingFolder()
+void CScaleOverviewDialog::OnEnChangeEditWorkingFolder()
 {
 	// TODO:  If this is a RICHEDIT control, the control will not
 	// send this notification unless you override the CDialogEx::OnInitDialog()
@@ -68,7 +71,7 @@ void CTestOverviewDialog::OnEnChangeEditWorkingFolder()
 	}
 }
 
-BOOL CTestOverviewDialog::OnInitDialog()
+BOOL CScaleOverviewDialog::OnInitDialog()
 {
 	__super::OnInitDialog();
 
@@ -91,12 +94,12 @@ BOOL CTestOverviewDialog::OnInitDialog()
 	return TRUE;
 }
 
-void CTestOverviewDialog::OnOK()
+void CScaleOverviewDialog::OnOK()
 {
 	// __super::OnOK();
 }
 
-void CTestOverviewDialog::OnCancel()
+void CScaleOverviewDialog::OnCancel()
 {
 	if (AfxMessageBox(_T("确认退出？"), MB_OKCANCEL) == IDOK)
 	{
@@ -105,18 +108,27 @@ void CTestOverviewDialog::OnCancel()
 }
 
 
-void CTestOverviewDialog::OnBnClickedStart()
+void CScaleOverviewDialog::OnBnClickedStart()
 {
 	POSITION position = _scale_list.GetFirstSelectedItemPosition();
 	int index = _scale_list.GetNextSelectedItem(position);
 	
-	CTestManager test_manager;
-
 	CString file_path = _working_folder + _T("\\");
 	file_path += _scale_list.GetItemText(index, 0) + _T(".scale");
-	_scale = test_manager.LoadPsiScale(file_path);
 
 	if (!_scale)
+	{
+		try
+		{
+			_scale = shared_ptr<CPsiScale>(new CPsiScale);
+		}
+		catch (CMemoryException*)
+		{
+			return;
+		}
+	}
+
+	if (!_scale->Load(file_path))
 	{
 		AfxMessageBox(_T("无法打开量表文件。"));
 	}

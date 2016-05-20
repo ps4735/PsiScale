@@ -9,15 +9,15 @@
 #include "afxvslistbox.h"
 #include "ChoiceList.h"
 
-class PsiScale;
-class PsiScaleQuestion;
+class CPsiScale;
+class CPsiScaleQuestion;
 
 // CQuestionEditorDlg 对话框
 class CQuestionEditorDlg : public CDialogEx
 {
 // 构造
 public:
-	CQuestionEditorDlg(std::shared_ptr<PsiScale> scale, CWnd* pParent = NULL);	// 标准构造函数
+	CQuestionEditorDlg(std::shared_ptr<CPsiScale> scale, CWnd* pParent = NULL);	// 标准构造函数
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
@@ -30,7 +30,7 @@ public:
 // 实现
 protected:
 	HICON m_hIcon;
-	std::shared_ptr<PsiScale> _scale;
+	std::shared_ptr<CPsiScale> _scale;
 
 	int _current_question;
 
