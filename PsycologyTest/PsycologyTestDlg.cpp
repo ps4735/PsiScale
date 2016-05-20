@@ -13,8 +13,15 @@
 
 using namespace std;
 
-static int buttons[10] = { IDC_RADIO_A, IDC_RADIO_B, IDC_RADIO_C,
-IDC_RADIO_D, IDC_RADIO_E, IDC_RADIO_F, IDC_RADIO_G, IDC_RADIO_H, IDC_RADIO_I, IDC_RADIO_J };
+static int buttons[] = { 
+	IDC_BUTTON_1, 
+	IDC_BUTTON_2, 
+	IDC_BUTTON_3, 
+	IDC_BUTTON_4, 
+	IDC_BUTTON_5, 
+	IDC_BUTTON_6, 
+	IDC_BUTTON_7, 
+};
 
 // CAboutDlg dialog used for App About
 
@@ -57,6 +64,7 @@ CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<PsiScale> scale,
 	: CDialogEx(IDD_PSYCOLOGYTEST_DIALOG, pParent),
 	_psi_scale(scale),
 	_current_question_index(0)
+	, _question_number(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -64,29 +72,23 @@ CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<PsiScale> scale,
 void CPsycologyTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_PROLOGUE, _prologue);
 	DDX_Text(pDX, IDC_QUESTION, _question);
-	DDX_Control(pDX, IDC_QUESTIONINDEXT, _question_index);
+	DDX_Text(pDX, IDC_STATIC_QUESTION_NUMBER, _question_number);
 }
 
 BEGIN_MESSAGE_MAP(CPsycologyTestDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(ID_START, &CPsycologyTestDlg::OnBnClickedStart)
 	ON_BN_CLICKED(ID_PREV, &CPsycologyTestDlg::OnBnClickedPrev)
 	ON_BN_CLICKED(ID_NEXT, &CPsycologyTestDlg::OnBnClickedNext)
-	ON_BN_CLICKED(IDC_RADIO_A, &CPsycologyTestDlg::OnBnClickedRadioA)
-	ON_BN_CLICKED(IDC_RADIO_B, &CPsycologyTestDlg::OnBnClickedRadioB)
-	ON_BN_CLICKED(IDC_RADIO_C, &CPsycologyTestDlg::OnBnClickedRadioC)
-	ON_BN_CLICKED(IDC_RADIO_D, &CPsycologyTestDlg::OnBnClickedRadioD)
-	ON_BN_CLICKED(IDC_RADIO_E, &CPsycologyTestDlg::OnBnClickedRadioE)
-	ON_BN_CLICKED(IDC_RADIO_F, &CPsycologyTestDlg::OnBnClickedRadioF)
-	ON_BN_CLICKED(IDC_RADIO_G, &CPsycologyTestDlg::OnBnClickedRadioG)
-	ON_BN_CLICKED(IDC_RADIO_H, &CPsycologyTestDlg::OnBnClickedRadioH)
-	ON_BN_CLICKED(IDC_RADIO_I, &CPsycologyTestDlg::OnBnClickedRadioI)
-	ON_BN_CLICKED(IDC_RADIO_J, &CPsycologyTestDlg::OnBnClickedRadioJ)
-	ON_CBN_SELCHANGE(IDC_QUESTIONINDEXT, &CPsycologyTestDlg::OnCbnSelchangeQuestionindext)
+	ON_BN_CLICKED(IDC_BUTTON_1, &CPsycologyTestDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON_2, &CPsycologyTestDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON_3, &CPsycologyTestDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON_4, &CPsycologyTestDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON_5, &CPsycologyTestDlg::OnBnClickedButton5)
+	ON_BN_CLICKED(IDC_BUTTON_6, &CPsycologyTestDlg::OnBnClickedButton6)
+	ON_BN_CLICKED(IDC_BUTTON_7, &CPsycologyTestDlg::OnBnClickedButton7)
 END_MESSAGE_MAP()
 
 
@@ -122,17 +124,12 @@ BOOL CPsycologyTestDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	// TODO: Add extra initialization here
-	// 让所有的按钮都隐藏掉
-	/*static int buttons[10] = { IDC_RADIO_A, IDC_RADIO_B, IDC_RADIO_C,
-		IDC_RADIO_D, IDC_RADIO_E, IDC_RADIO_F, IDC_RADIO_G, IDC_RADIO_H, IDC_RADIO_I, IDC_RADIO_J };*/
-	for (unsigned int i = 0; i < 10; ++i)
+	for (unsigned int i = 0; i < sizeof (buttons) / sizeof(int); ++i)
 	{
 		GetDlgItem(buttons[i])->ShowWindow(SW_HIDE);
 	}
 
-	GetDlgItem(IDC_QUESTIONINDEXT)->ShowWindow(SW_HIDE);
-
+	ShowQuestion(0);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -186,16 +183,6 @@ HCURSOR CPsycologyTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CPsycologyTestDlg::OnBnClickedStart()
-{
-	ASSERT(_psi_scale);
-
-	ShowQuestion(0);
-
-	GetDlgItem(IDC_QUESTIONINDEXT)->ShowWindow(SW_SHOW);
-	InitialQuestionComBox();
-}
-
 bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 {
 	if (_psi_scale == nullptr)
@@ -205,53 +192,88 @@ bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 		return false;
 
 	_current_question_index = question_index;
-	_prologue = _psi_scale->GetPrologue();
 	_question = _psi_scale->Question(_current_question_index).GetText();
 
-	ShowRadioButtons(_psi_scale->Choices().size());
-
-	if (_answer_manager.IsAnswered(_psi_scale->GetId(), _current_question_index))
+	if (_psi_scale->IsSameChoice())
 	{
-		CheckRadioButton(buttons[0], buttons[9], buttons[_answer_manager.GetAnswer(_psi_scale->GetId(), _current_question_index)]);
+		if (_current_question_index == 0)
+		{
+			auto& choices = _psi_scale->Choices();
+			for (unsigned int i = 0; i < choices.size(); ++i)
+			{
+				CString button_text;
+				button_text.Format(_T("    %c. %s"), _T('A') + i, choices[i].text);
+				GetDlgItem(buttons[i])->SetWindowText(button_text);
+			}
+		}
 	}
 	else
 	{
-		CheckRadioButton(buttons[0], buttons[9], buttons[9]);
+		auto& choices = _psi_scale->Question(_current_question_index).Choices();
+		for (unsigned int i = 0; i < choices.size(); ++i)
+		{
+			CString button_text;
+			button_text.Format(_T("    %c. %s"), _T('A') + i, choices[i].text);
+			GetDlgItem(buttons[i])->SetWindowText(button_text);
+		}
 	}
-	
+
+	ShowButtons(_psi_scale->Choices().size());
+
+	if (_answer_manager.IsAnswered(_psi_scale->GetId(), _current_question_index))
+	{
+		Check(_answer_manager.GetAnswer(_psi_scale->GetId(), 
+			_current_question_index) - 1);
+	}
+	else
+	{
+		UncheckAll();
+	}
+	_question_number.Format(_T("%d / %d"), _current_question_index + 1, 
+		_psi_scale->GetQuestionCount());
+
 	UpdateData(FALSE);
+
 	return true;
 }
 
-bool CPsycologyTestDlg::ShowRadioButtons(unsigned level_count)
+bool CPsycologyTestDlg::ShowButtons(unsigned choice_count)
 {
-	if (level_count > 10)
+	if (choice_count > 10)
 		return false;
 
-	for (unsigned int i = 0; i < level_count; ++i)
+	for (unsigned int i = 0; i < choice_count; ++i)
 	{
 		GetDlgItem(buttons[i])->ShowWindow(SW_SHOW);
 	}
-	for (unsigned int i = level_count; i < 10; ++i)
+	for (unsigned int i = choice_count; i < sizeof(buttons) / sizeof(int); ++i)
 	{
 		GetDlgItem(buttons[i])->ShowWindow(SW_HIDE);
 	}
 
+	AdjustSize(buttons[choice_count - 1]);
+
 	return true;
 }
 
-
-void CPsycologyTestDlg::InitialQuestionComBox()
+void CPsycologyTestDlg::Check(int button_to_check)
 {
-	int nums = _psi_scale->GetQuestionCount();
-	CString str;
-
-	for (int i = 0; i < nums; ++i)
+	for (unsigned int i = 0; i < sizeof(buttons) / sizeof (int); ++i)
 	{
-		str.Format(_T("第%d题"), i + 1);
-		_question_index.AddString(str);
+// 		((CButton*)GetDlgItem(buttons[i]))->SetCheck(
+//			(i != button_to_check) ? BST_UNCHECKED : BST_CHECKED);
+		((CButton*)GetDlgItem(buttons[i]))->SetState(
+			(i == button_to_check));
 	}
-	_question_index.SetCurSel(0);
+}
+
+void CPsycologyTestDlg::UncheckAll()
+{
+	for (auto button : buttons)
+	{
+//		((CButton*)GetDlgItem(button))->SetCheck(BST_CHECKED);
+		((CButton*)GetDlgItem(button))->SetState(0);
+	}
 }
 
 void CPsycologyTestDlg::OnBnClickedPrev()
@@ -259,10 +281,8 @@ void CPsycologyTestDlg::OnBnClickedPrev()
 	if (_current_question_index > 0)
 	{
 		ShowQuestion(_current_question_index - 1);
-		_question_index.SetCurSel(_current_question_index);
 	}
 }
-
 
 void CPsycologyTestDlg::OnBnClickedNext()
 {
@@ -270,67 +290,102 @@ void CPsycologyTestDlg::OnBnClickedNext()
 	if (_current_question_index < _psi_scale->GetQuestionCount() - 1)
 	{
 		ShowQuestion(_current_question_index + 1);
-		_question_index.SetCurSel(_current_question_index);
 	}
 }
 
-void CPsycologyTestDlg::OnBnClickedRadioA()
-{
-	ProcessAnswer(_T('A'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioB()
-{
-	ProcessAnswer(_T('B'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioC()
-{
-	ProcessAnswer(_T('C'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioD()
-{
-	ProcessAnswer(_T('D'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioE()
-{
-	ProcessAnswer(_T('E'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioF()
-{
-	ProcessAnswer(_T('F'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioG()
-{
-	ProcessAnswer(_T('G'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioH()
-{
-	ProcessAnswer(_T('H'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioI()
-{
-	ProcessAnswer(_T('I'));
-}
-void CPsycologyTestDlg::OnBnClickedRadioJ()
-{
-	ProcessAnswer(_T('J'));
-	
-}
-
-void CPsycologyTestDlg::ProcessAnswer(const TCHAR answer)
+void CPsycologyTestDlg::ProcessAnswer(unsigned int answer)
 {
 	// 1. 记录
-	_answer_manager.AddAnswer(_psi_scale->GetId(), _current_question_index, answer - _T('A'));
+	_answer_manager.AddAnswer(_psi_scale->GetId(), _current_question_index, answer);
 
 	// 2. 下一道题。
 	if (_current_question_index < _psi_scale->GetQuestionCount() - 1)
 	{
 		ShowQuestion(_current_question_index + 1);
-		_question_index.SetCurSel(_current_question_index);
 	}
 }
 
-
-void CPsycologyTestDlg::OnCbnSelchangeQuestionindext()
+void CPsycologyTestDlg::OnBnClickedButton1()
 {
-	ShowQuestion(_question_index.GetCurSel());
+	ProcessAnswer(1);
+}
+
+
+void CPsycologyTestDlg::OnBnClickedButton2()
+{
+	ProcessAnswer(2);
+}
+
+void CPsycologyTestDlg::OnBnClickedButton3()
+{
+	ProcessAnswer(3);
+}
+
+void CPsycologyTestDlg::OnBnClickedButton4()
+{
+	ProcessAnswer(4);
+}
+
+void CPsycologyTestDlg::OnBnClickedButton5()
+{
+	ProcessAnswer(5);
+}
+
+void CPsycologyTestDlg::OnBnClickedButton6()
+{
+	ProcessAnswer(6);
+}
+
+void CPsycologyTestDlg::OnBnClickedButton7()
+{
+	ProcessAnswer(7);
+}
+
+void CPsycologyTestDlg::AdjustSize(int last_button)
+{
+	CRect button_rect;
+	auto button = GetDlgItem(last_button);
+	if (button == nullptr)
+		return;
+
+
+	button->GetWindowRect(&button_rect);
+	ScreenToClient(&button_rect);
+
+	CRect markrect;
+	CRect dlgrect;
+	CRect clientrect;
+
+	MoveButtonUp(*GetDlgItem(ID_PREV), button_rect.bottom + 15);
+	MoveButtonUp(*GetDlgItem(ID_NEXT), button_rect.bottom + 15);
+
+	GetClientRect(&clientrect);  // client area of the dialog
+	GetWindowRect(&dlgrect);	  // rectangle of the dialog window
+
+								  // get height of the title bar
+								  //int offset = dlgrect.Width() - clientrect.right ;
+
+	CRect next_button_rect;
+	auto next_button = GetDlgItem(ID_NEXT);
+	ASSERT(next_button);
+
+	next_button->GetWindowRect(&next_button_rect);
+	ScreenToClient(&next_button_rect);
+
+	int offset = dlgrect.Height() - clientrect.bottom;
+	dlgrect.bottom = dlgrect.top + offset + next_button_rect.bottom + 10;
+
+	MoveWindow(dlgrect.left, dlgrect.top, dlgrect.Width(), dlgrect.Height());
+}
+
+void CPsycologyTestDlg::MoveButtonUp(CWnd& button,
+	unsigned int y_pos)
+{
+	CRect rect;
+	button.GetWindowRect(rect);
+	ScreenToClient(rect);
+
+	rect.bottom = y_pos + rect.Height();
+	rect.top = y_pos;
+	button.MoveWindow(rect);
 }

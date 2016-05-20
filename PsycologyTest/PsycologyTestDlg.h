@@ -35,8 +35,8 @@ protected:
 
 	// Generated message map functions
 	bool ShowQuestion(unsigned question_index);
-	bool ShowRadioButtons(unsigned level_count);
-	void InitialQuestionComBox();
+	bool ShowButtons(unsigned choice_count);
+	void MoveButtonUp(CWnd& button, unsigned int y_pos);
 
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
@@ -45,25 +45,22 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-	afx_msg void OnBnClickedStart();
 	afx_msg void OnBnClickedPrev();
 	afx_msg void OnBnClickedNext();
-	CString _prologue;
 	CString _question;
 
-	afx_msg void OnBnClickedRadioA();
-	afx_msg void OnBnClickedRadioB();
-	afx_msg void OnBnClickedRadioC();
-	afx_msg void OnBnClickedRadioD();
-	afx_msg void OnBnClickedRadioE();
-	afx_msg void OnBnClickedRadioF();
-	afx_msg void OnBnClickedRadioG();
-	afx_msg void OnBnClickedRadioH();
-	afx_msg void OnBnClickedRadioI();
-	afx_msg void OnBnClickedRadioJ();
-
-	void ProcessAnswer(const TCHAR answer);
+	void ProcessAnswer(unsigned int answer);
 public:
-	CComboBox _question_index;
-	afx_msg void OnCbnSelchangeQuestionindext();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton5();
+	afx_msg void OnBnClickedButton6();
+	afx_msg void OnBnClickedButton7();
+	void Check(int button_to_check);
+	void UncheckAll();
+
+	void AdjustSize(int last_button);
+	CString _question_number;
 };

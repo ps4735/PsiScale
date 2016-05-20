@@ -63,9 +63,6 @@ public:
 	CString GetScalePath(const PsiScale& scale);
 
 	afx_msg void OnBnClickedButtonAddQuestion();
-// 	afx_msg void OnBnClickedButtonAddGroup();
-// 	afx_msg void OnBnClickedButtonAddChoice();
-// 	afx_msg void OnEnChangeEditQuestion();
 	afx_msg void OnLbnSelchangeListQuestions();
 	afx_msg void OnEnChangeName();
 	afx_msg void OnBnClickedButtonSave();

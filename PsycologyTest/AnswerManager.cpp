@@ -10,7 +10,9 @@ CAnswerManager::~CAnswerManager()
 {
 }
 
-bool CAnswerManager::AddAnswer(unsigned table_id, unsigned question_id, unsigned answer)
+bool CAnswerManager::AddAnswer(unsigned table_id, 
+	unsigned question_id, 
+	unsigned answer)
 {
 	_answers[table_id][question_id] = answer;
 	return true;
@@ -39,13 +41,8 @@ bool CAnswerManager::IsAnswered(unsigned table_id, unsigned question_id)
 	{
 		return false;
 	}
-	auto question = table->second.find(question_id);
-	if (question == table->second.end())
-	{
-		return false;
-	}
 
-	return true;
+	return (table->second.find(question_id) != table->second.end());
 }
 
 void CAnswerManager::SetSubjectId(const TCHAR* subject_id)
