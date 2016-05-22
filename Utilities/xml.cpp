@@ -12,7 +12,7 @@ Copyright: Magnetic Resonance Lab., East China Normal University
 #include <cassert>
 #include <sstream>
 
-#define NO_BOOST
+// #define NO_BOOST
 
 #ifndef NO_BOOST
 #include <boost/tokenizer.hpp>

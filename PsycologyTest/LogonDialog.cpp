@@ -114,19 +114,16 @@ void CLogonDialog::RunScale(std::shared_ptr<CUser> user)
 	{
 		_user_manager->Save();
 	}
+	_user = user;
 
-	CScaleOverviewDialog dlg(*user);
-	if (dlg.DoModal() == IDOK)
-	{
-		_password.Empty();
-		_password2.Empty();
-		_user_name.Empty();
-
-		UpdateData(FALSE);
-	}
-
+	__super::OnOK();
 }
 
+
+std::shared_ptr<CUser> CLogonDialog::GetUser()
+{
+	return _user;
+}
 
 BOOL CLogonDialog::OnInitDialog()
 {
