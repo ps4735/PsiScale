@@ -1,4 +1,4 @@
-<PsycologyTest Id="1" Name="贝克焦虑量表" SameChoices="1">
+<PsycologyTest Id="1" Name="贝克焦虑量表BAI" SameChoices="1">
 <Choices>
 <Item Id="1">无</Item>
 <Item Id="2">轻度，无多大烦恼</Item>

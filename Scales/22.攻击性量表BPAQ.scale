@@ -1,4 +1,4 @@
-<PsycologyTest Id="22" Name="攻击性量表" SameChoices="1">
+<PsycologyTest Id="22" Name="攻击性量表BPAQ" SameChoices="1">
 <Choices>
 <Item Id="1">1.非常不符合</Item>
 <Item Id="2">2.不符合</Item>

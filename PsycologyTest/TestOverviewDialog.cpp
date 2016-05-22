@@ -39,6 +39,7 @@ void CScaleOverviewDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_WORKING_FOLDER, _working_folder_edit);
 	DDX_Text(pDX, IDC_EDIT_WORKING_FOLDER, _working_folder);
 	DDX_Control(pDX, IDC_LIST_SCALES, _scale_list);
+	DDX_Control(pDX, IDC_START, _start);
 }
 
 
@@ -46,6 +47,7 @@ BEGIN_MESSAGE_MAP(CScaleOverviewDialog, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT_WORKING_FOLDER, &CScaleOverviewDialog::OnEnChangeEditWorkingFolder)
 	ON_BN_CLICKED(IDC_START, &CScaleOverviewDialog::OnBnClickedStart)
 	ON_MESSAGE(WM_SCALE_FINISHED, OnScaleFinished)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_SCALES, &CScaleOverviewDialog::OnLvnItemchangedListScales)
 END_MESSAGE_MAP()
 
 
@@ -163,4 +165,26 @@ LRESULT CScaleOverviewDialog::OnScaleFinished(WPARAM, LPARAM)
 {
 	_scale_list.ChangeScale(_scale->GetName(), true); //不起作用
 	return 0;
+}
+
+void CScaleOverviewDialog::OnLvnItemchangedListScales(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+
+	POSITION position = _scale_list.GetFirstSelectedItemPosition();
+	int index = _scale_list.GetNextSelectedItem(position);
+
+	CString state;
+	state = _scale_list.GetItemText(index, 1);
+
+	if (state == _T("完成"))
+	{
+		_start.EnableWindow(FALSE);
+	}
+	else
+	{
+		_start.EnableWindow(TRUE);
+	}
+
+	*pResult = 0;
 }

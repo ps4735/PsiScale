@@ -1,10 +1,10 @@
 <PsycologyTest Id="8" Name="共情量表IRI" SameChoices="1">
 <Choices>
-<Item Id="1">1</Item>
-<Item Id="2">2</Item>
-<Item Id="3">3</Item>
-<Item Id="4">4</Item>
-<Item Id="5">5</Item>
+<Item Id="1">1 非常不符合</Item>
+<Item Id="2">2 不太符合</Item>
+<Item Id="3">3 不确定</Item>
+<Item Id="4">4 比较符合</Item>
+<Item Id="5">5 非常符合</Item>
 </Choices>
 <Prologue>对于下面每个项目，你需要在1、2、3、4 或者5中做出选择，以评价该项目的描述与你自己的符合程度。当你做出选择后，请在相应的评价下打“√”。在判断前请认真阅读每个项目，尽量诚实的作答。谢谢。
 请使用下面的评分方式：       （此描述与我一点也不符 1——2——3——4——5  此描述与我非常符合）

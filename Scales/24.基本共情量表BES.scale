@@ -12,7 +12,7 @@
 <Item>认知共情</Item>
 </Groups>
 <Questions>
-<Item Id="1" ReverseScore="0" SubScale="情感共情">朋友的情绪对我影响不大。</Item>
+<Item Id="1" ReverseScore="1" SubScale="情感共情">朋友的情绪对我影响不大。</Item>
 <Item Id="2" ReverseScore="0" SubScale="情感共情">和情绪忧伤的朋友相处后，自己也经常感到忧伤。</Item>
 <Item Id="3" ReverseScore="0" SubScale="认知共情">当朋友表现优异，取得成绩时，我能体会他/她的喜悦。</Item>
 <Item Id="4" ReverseScore="0" SubScale="情感共情">看到恐怖片中的一些镜头时，我会感到害怕。</Item>

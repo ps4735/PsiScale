@@ -43,7 +43,5 @@
 <Item Id="28" ReverseScore="0" SubScale="No planning impulsiveness">28.我很看重对未来的安排</Item>
 <Item Id="29" ReverseScore="0" SubScale="Motor impulsiveness">29.我想到什么就马上去做</Item>
 <Item Id="30" ReverseScore="0" SubScale="Cognitive impulsiveness">30.我容易想出新的办法来解决遇到的困难</Item>
-<Item Id="31" ReverseScore="0"/>
-<Item Id="32" ReverseScore="0"/>
 </Questions>
 </PsycologyTest>

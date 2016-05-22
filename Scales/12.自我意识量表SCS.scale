@@ -12,23 +12,22 @@
 <Item>公众自我</Item>
 </Groups>
 <Questions>
-<Item Id="1" ReverseScore="0">我经常试图描述自己</Item>
-<Item Id="2" ReverseScore="0">我关心自己做事的方式</Item>
-<Item Id="3" ReverseScore="0">总的来说，我对自己是什么样的人不太清楚</Item>
-<Item Id="4" ReverseScore="0">我经常反省自己</Item>
-<Item Id="5" ReverseScore="0">我关心自己的表现方式</Item>
-<Item Id="6" ReverseScore="0">我能决定自己的命运</Item>
-<Item Id="7" ReverseScore="0">我从不检讨自己</Item>
-<Item Id="8" ReverseScore="0">我对自己是什么样的人很在意</Item>
-<Item Id="9" ReverseScore="0">我很关心自己的内在感受</Item>
-<Item Id="10" ReverseScore="0">我常常担心我是否给别人留下一个好印象</Item>
-<Item Id="11" ReverseScore="0">我常常考察自己的动机</Item>
-<Item Id="12" ReverseScore="0">离开家时，我常常照镜子</Item>
-<Item Id="13" ReverseScore="0">有时，我有一种自己在看着自己的感受</Item>
-<Item Id="14" ReverseScore="0">我关心他人看我的方式</Item>
-<Item Id="15" ReverseScore="0">我对自己的心情变化很敏感</Item>
-<Item Id="16" ReverseScore="0">我对自己的外表很关注</Item>
-<Item Id="17" ReverseScore="0">当解决问题时，我清楚自己的心理</Item>
-<Item Id="18" ReverseScore="0"/>
+<Item Id="1" ReverseScore="0" SubScale="内在自我">我经常试图描述自己</Item>
+<Item Id="2" ReverseScore="0" SubScale="公众自我">我关心自己做事的方式</Item>
+<Item Id="3" ReverseScore="1" SubScale="内在自我">总的来说，我对自己是什么样的人不太清楚</Item>
+<Item Id="4" ReverseScore="0" SubScale="内在自我">我经常反省自己</Item>
+<Item Id="5" ReverseScore="0" SubScale="公众自我">我关心自己的表现方式</Item>
+<Item Id="6" ReverseScore="0" SubScale="内在自我">我能决定自己的命运</Item>
+<Item Id="7" ReverseScore="1" SubScale="内在自我">我从不检讨自己</Item>
+<Item Id="8" ReverseScore="0" SubScale="公众自我">我对自己是什么样的人很在意</Item>
+<Item Id="9" ReverseScore="0" SubScale="内在自我">我很关心自己的内在感受</Item>
+<Item Id="10" ReverseScore="0" SubScale="公众自我">我常常担心我是否给别人留下一个好印象</Item>
+<Item Id="11" ReverseScore="0" SubScale="内在自我">我常常考察自己的动机</Item>
+<Item Id="12" ReverseScore="0" SubScale="公众自我">离开家时，我常常照镜子</Item>
+<Item Id="13" ReverseScore="0" SubScale="内在自我">有时，我有一种自己在看着自己的感受</Item>
+<Item Id="14" ReverseScore="0" SubScale="公众自我">我关心他人看我的方式</Item>
+<Item Id="15" ReverseScore="0" SubScale="内在自我">我对自己的心情变化很敏感</Item>
+<Item Id="16" ReverseScore="0" SubScale="公众自我">我对自己的外表很关注</Item>
+<Item Id="17" ReverseScore="0" SubScale="内在自我">当解决问题时，我清楚自己的心理</Item>
 </Questions>
 </PsycologyTest>

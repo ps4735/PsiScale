@@ -4,6 +4,7 @@
 #include "ScaleList.h"
 #include <memory>
 #include "AnswerManager.h"
+#include "afxwin.h"
 
 class CPsiScale;
 class CUser;
@@ -45,4 +46,6 @@ public:
 	CUser& _user;
 	CAnswerManager _answer_manager;
 	afx_msg void OnBnClickedStart();
+	afx_msg void OnLvnItemchangedListScales(NMHDR *pNMHDR, LRESULT *pResult);
+	CButton _start;
 };
