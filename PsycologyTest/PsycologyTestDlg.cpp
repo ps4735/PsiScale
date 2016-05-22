@@ -221,27 +221,13 @@ bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 	{
 		if (_current_question_index == 0)
 		{
-			auto& choices = _psi_scale->Choices();
-			for (unsigned int i = 0; i < choices.size(); ++i)
-			{
-				CString button_text;
-				button_text.Format(_T("    %c. %s"), _T('A') + i, choices[i].text);
-				GetDlgItem(buttons[i])->SetWindowText(button_text);
-			}
+			UpdateSelectionButtons(_psi_scale->Choices());
 		}
 	}
 	else
 	{
-		auto& choices = _psi_scale->Question(_current_question_index).Choices();
-		for (unsigned int i = 0; i < choices.size(); ++i)
-		{
-			CString button_text;
-			button_text.Format(_T("    %c. %s"), _T('A') + i, choices[i].text);
-			GetDlgItem(buttons[i])->SetWindowText(button_text);
-		}
+		UpdateSelectionButtons(_psi_scale->Question(_current_question_index).Choices());
 	}
-
-	ShowButtons(_psi_scale->Choices().size());
 
 	if (_answer_manager.IsAnswered(_psi_scale->GetName(), _current_question_index))
 	{
@@ -258,6 +244,17 @@ bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 	UpdateData(FALSE);
 
 	return true;
+}
+
+void CPsycologyTestDlg::UpdateSelectionButtons(std::vector<CQuestionChoice> &choices)
+{
+	for (unsigned int i = 0; i < choices.size(); ++i)
+	{
+		CString button_text;
+		button_text.Format(_T("    %c. %s"), _T('A') + i, choices[i].text);
+		GetDlgItem(buttons[i])->SetWindowText(button_text);
+	}
+	ShowButtons(choices.size());
 }
 
 bool CPsycologyTestDlg::ShowButtons(unsigned choice_count)
