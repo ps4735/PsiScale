@@ -67,6 +67,7 @@ public:
 
 	CButton _add_question_button;
 	CButton _delete_question_button;
+
 	CEdit _scale_id_edit;
 	CEdit _scale_name_edit;
 	CEdit _prologue_text_edit;

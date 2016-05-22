@@ -286,6 +286,7 @@ void CPsiScaleEditorDlg::UpdateScale()
 	_scale->SetId(_scale_id);
 	_scale->SetName(_scale_name);
 	_scale->SetPrologue(_prologue_text);
+
 	_scale->SetSameChoice(_use_same_choices != FALSE);
 	if (_use_same_choices != FALSE)
 	{
@@ -527,3 +528,5 @@ void CPsiScaleEditorDlg::OnBnClickedExit()
 	}
 	CDialogEx::OnCancel();
 }
+
+

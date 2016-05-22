@@ -88,6 +88,8 @@ CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<CPsiScale> scale,
 	, _question_number(_T(""))
 	, _answer_manager(answer_manager)
 	, _notify_wnd(notify_wnd)
+	, _timer_text(_T(""))
+	, _timer(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -97,6 +99,7 @@ void CPsycologyTestDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_QUESTION, _question);
 	DDX_Text(pDX, IDC_STATIC_QUESTION_NUMBER, _question_number);
+	DDX_Text(pDX, IDC_TIMER, _timer_text);
 }
 
 BEGIN_MESSAGE_MAP(CPsycologyTestDlg, CDialogEx)
@@ -112,6 +115,9 @@ BEGIN_MESSAGE_MAP(CPsycologyTestDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_5, &CPsycologyTestDlg::OnBnClickedButton5)
 	ON_BN_CLICKED(IDC_BUTTON_6, &CPsycologyTestDlg::OnBnClickedButton6)
 	ON_BN_CLICKED(IDC_BUTTON_7, &CPsycologyTestDlg::OnBnClickedButton7)
+	ON_WM_CLOSE()
+	ON_WM_TIMER()
+	ON_STN_CLICKED(IDC_TIMER, &CPsycologyTestDlg::OnStnClickedTimer)
 END_MESSAGE_MAP()
 
 
@@ -154,6 +160,8 @@ BOOL CPsycologyTestDlg::OnInitDialog()
 //	ShowQuestion(0);
 	auto un_answered_question =_answer_manager.CheckForUnansweredQuestion(*_psi_scale);
 	ShowQuestion((un_answered_question == -1) ? _psi_scale->GetQuestionCount() - 1 : un_answered_question);
+
+	SetTimer(1, 1000, NULL);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -207,6 +215,7 @@ HCURSOR CPsycologyTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
 bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 {
 	ASSERT(_psi_scale);
@@ -219,10 +228,7 @@ bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 
 	if (_psi_scale->IsSameChoice())
 	{
-		if (_current_question_index == 0)
-		{
-			UpdateSelectionButtons(_psi_scale->Choices());
-		}
+		UpdateSelectionButtons(_psi_scale->Choices());
 	}
 	else
 	{
@@ -433,4 +439,33 @@ void CPsycologyTestDlg::MoveButtonUp(CWnd& button,
 	rect.bottom = y_pos + rect.Height();
 	rect.top = y_pos;
 	button.MoveWindow(rect);
+}
+
+
+void CPsycologyTestDlg::OnClose()
+{
+	// TODO: Add your message handler code here and/or call default
+	KillTimer(1);
+
+	CDialogEx::OnClose();
+}
+
+
+void CPsycologyTestDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: Add your message handler code here and/or call default
+	if (1 == nIDEvent)
+	{
+		++_timer;
+		_timer_text.Format(_T("”√ ±:%2d∑÷%2d√Î"), _timer / 60, _timer % 60);
+	}
+	UpdateData(FALSE);
+
+	CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void CPsycologyTestDlg::OnStnClickedTimer()
+{
+	// TODO: Add your control notification handler code here
 }

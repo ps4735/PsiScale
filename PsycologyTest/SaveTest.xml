@@ -1,0 +1,15 @@
+<PsycologyTest Id="1" Name="11" ItemCount="3" SameChoices="1">
+<Prologue Text="111"/>
+<Choices LevelCount="2">
+<Item Id="1" Text="a"/>
+<Item Id="2" Text="b"/>
+</Choices>
+<Groups>
+<Item Id="0" Description="1"/>
+</Groups>
+<Questions>
+<Item Id="1" Text="222222" ReverseScore="0" GroupId="0"/>
+<Item Id="2" Text="333333" ReverseScore="0" GroupId="0"/>
+<Item Id="3" Text="444444" ReverseScore="0" GroupId="0"/>
+</Questions>
+</PsycologyTest>
