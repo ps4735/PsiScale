@@ -9,14 +9,15 @@
 #include "AnswerManager.h"
 
 class CPsiScale;
-
+class CAnswerManager;
+#define WM_SCALE_FINISHED WM_APP + 101
 // CPsycologyTestDlg dialog
 class CPsycologyTestDlg : public CDialogEx
 {
+	
 // Construction
 public:
-	CPsycologyTestDlg(std::shared_ptr<CPsiScale> scale, CWnd* pParent = NULL);	// standard constructor
-
+	CPsycologyTestDlg(std::shared_ptr<CPsiScale> scale, CAnswerManager& answer_manager, HWND notify_wnd, CWnd* pParent = NULL);	// standard constructor
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_PSYCOLOGYTEST_DIALOG };
@@ -29,9 +30,10 @@ public:
 // Implementation
 protected:
 	HICON m_hIcon;
-	CAnswerManager _answer_manager;
+	CAnswerManager& _answer_manager;
 	std::shared_ptr<CPsiScale> _psi_scale;
 	unsigned _current_question_index;
+	CString _test_info_path;
 
 	// Generated message map functions
 	bool ShowQuestion(unsigned question_index);
@@ -63,4 +65,5 @@ public:
 
 	void AdjustSize(int last_button);
 	CString _question_number;
+	HWND _notify_wnd;
 };

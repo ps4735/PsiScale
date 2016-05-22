@@ -13,6 +13,7 @@ public:
 	virtual ~CScaleList();
 	void Init();
 	void InsertScale(const CString& scale_name, bool finished);
+	void ChangeScale(const CString& scale_name, bool finished);
 	void Clear();
 protected:
 	DECLARE_MESSAGE_MAP()

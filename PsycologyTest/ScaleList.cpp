@@ -40,6 +40,38 @@ void CScaleList::InsertScale(const CString& scale_name, bool finished)
 	InsertItem(&item);
 }
 
+void CScaleList::ChangeScale(const CString& scale_name, bool finished)
+{
+	std::vector<std::pair<CString, bool>> temp;
+	std::swap(temp, _scale_states);
+	Clear();
+	for (unsigned int i = 0; i < temp.size(); ++i)
+	{
+		auto name = temp[i].first;
+		name = name.Right(name.GetLength() - name.ReverseFind(_T('.')) - 1);
+		if (name == scale_name)
+		{
+			temp[i].second = finished;	
+		}
+		InsertScale(temp[i].first, temp[i].second);
+	}
+	//LVFINDINFO info;
+	//int nIndex;
+
+	//info.flags = LVFI_PARTIAL | LVFI_STRING;
+	//info.psz = _T("scale_name");
+
+	//// Delete all of the items that begin with the string.
+	//if ((nIndex = FindItem(&info)) != -1)
+	//{
+	//	SetItem(nIndex, 1, LVIF_STATE, finished ? _T("完成") : _T("未完成"), 0, LVIS_SELECTED,
+	//		LVIS_SELECTED, 0);
+	//}
+	//
+	//Invalidate(FALSE);
+	//UpdateWindow();
+}
+
 void CScaleList::Clear()
 {
 	_scale_states.clear();

@@ -78,12 +78,16 @@ END_MESSAGE_MAP()
 // CPsycologyTestDlg dialog
 
 
-CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<CPsiScale> scale, 
+CPsycologyTestDlg::CPsycologyTestDlg(shared_ptr<CPsiScale> scale,
+	CAnswerManager& answer_manager,
+	HWND notify_wnd, 
 	CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_PSYCOLOGYTEST_DIALOG, pParent),
 	_psi_scale(scale),
 	_current_question_index(0)
 	, _question_number(_T(""))
+	, _answer_manager(answer_manager)
+	, _notify_wnd(notify_wnd)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -147,8 +151,9 @@ BOOL CPsycologyTestDlg::OnInitDialog()
 	{
 		GetDlgItem(buttons[i])->ShowWindow(SW_HIDE);
 	}
-
-	ShowQuestion(0);
+//	ShowQuestion(0);
+	auto un_answered_question =_answer_manager.CheckForUnansweredQuestion(*_psi_scale);
+	ShowQuestion((un_answered_question == -1) ? _psi_scale->GetQuestionCount() - 1 : un_answered_question);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -238,9 +243,9 @@ bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 
 	ShowButtons(_psi_scale->Choices().size());
 
-	if (_answer_manager.IsAnswered(_psi_scale->GetId(), _current_question_index))
+	if (_answer_manager.IsAnswered(_psi_scale->GetName(), _current_question_index))
 	{
-		Check(_answer_manager.GetAnswer(_psi_scale->GetId(), 
+		Check(_answer_manager.GetAnswer(_psi_scale->GetName(), 
 			_current_question_index) - 1);
 	}
 	else
@@ -314,8 +319,8 @@ void CPsycologyTestDlg::OnBnClickedNext()
 void CPsycologyTestDlg::ProcessAnswer(unsigned int answer)
 {
 	// 1. 记录
-	_answer_manager.AddAnswer(_psi_scale->GetId(), _current_question_index, answer);
-
+	_answer_manager.AddAnswer(_psi_scale->GetName(), _current_question_index, answer);
+	_answer_manager.SetScore(_psi_scale->GetName(), _psi_scale->GetQuestion(_current_question_index).GetGroup(), 0); // 分值定义尚未定义。
 	// 2. 下一道题。
 	if (_current_question_index < _psi_scale->GetQuestionCount() - 1)
 	{
@@ -329,6 +334,8 @@ void CPsycologyTestDlg::ProcessAnswer(unsigned int answer)
 			if (AfxMessageBox(_T("您已经完成了该问卷，点击“确认”按钮返回。"), MB_OKCANCEL) ==
 				IDOK)
 			{
+				_answer_manager.FinishScale(_psi_scale->GetName());
+				::SendMessage(_notify_wnd, WM_SCALE_FINISHED, 0, 0);
 				__super::OnOK();
 			}
 		}

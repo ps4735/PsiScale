@@ -6,19 +6,21 @@
 #include "..\Utilities\FileSystem.h"
 
 #include <algorithm>
-
-const TCHAR* USERS_INFO = _T("UsersInfo");
-const TCHAR* USER_INFO = _T("UserInfo");
-const TCHAR* NAME = _T("Name");
-const TCHAR* PASSWORD = _T("Password");
-const TCHAR* UID = _T("UID");
+namespace UserInfo
+{ 
+	const TCHAR* XML_USERS_INFO = _T("UsersInfo");
+	const TCHAR* XML_USER_INFO = _T("UserInfo");
+	const TCHAR* XML_NAME = _T("Name");
+	const TCHAR* XML_PASSWORD = _T("Password");
+	const TCHAR* XML_UID = _T("UID");
+}
 //const TCHAR* TESTS = _T("Tests");
 //const TCHAR* TABLE = _T("Table");
 //const TCHAR* ID = _T("Id");
 //const TCHAR* PATH = _T("Path");
 
 using namespace std;
-
+using namespace UserInfo;
 CUserManager::CUserManager()
 {
 	_user_info_path = FileSystem::GetStartPath() + _T("\\..\\Scales\\TestUsers\\UserInfo.xml");
@@ -39,6 +41,7 @@ bool CUserManager::Init()
 		// log
 		return false;
 	}
+	
 	return Load();
 }
 
@@ -91,12 +94,13 @@ bool CUserManager::Load()
 		for (unsigned int i = 0; i < child_elements.size(); ++i)
 		{
 			auto item = child_elements[i];
-			CString name = item->GetAttrib(NAME);
-			std::shared_ptr<CUser> user(new CUser(name, item->GetAttrib(PASSWORD)));
+			CString name = item->GetAttrib(XML_NAME);
+			std::shared_ptr<CUser> user(new CUser(name, item->GetAttrib(XML_PASSWORD)));
 			_users.insert(make_pair(name, user));
-			CString user_uid = item->GetAttrib(UID);
+			CString user_uid = item->GetAttrib(XML_UID);
 			user->SetUid(user_uid);
 			_user_name_to_uid.insert(make_pair(name, user_uid));
+			SetWorkingFolder(user);
 		}
 	}
 	catch (std::bad_alloc&)
@@ -109,13 +113,13 @@ bool CUserManager::Load()
 
 bool CUserManager::Save()
 {
-	Utilities::CXml users_info(USERS_INFO);
+	Utilities::CXml users_info(XML_USERS_INFO);
 	for (auto iter = _users.begin(); iter != _users.end(); ++iter)
 	{
-		auto user_info_element = users_info.AddElement(USER_INFO);
-		user_info_element->SetAttrib(NAME, iter->first);
-		user_info_element->SetAttrib(PASSWORD, iter->second->GetPassword());
-		user_info_element->SetAttrib(UID, iter->second->GetUid());
+		auto user_info_element = users_info.AddElement(XML_USER_INFO);
+		user_info_element->SetAttrib(XML_NAME, iter->first);
+		user_info_element->SetAttrib(XML_PASSWORD, iter->second->GetPassword());
+		user_info_element->SetAttrib(XML_UID, iter->second->GetUid());
 	}
 	bool result = users_info.Save(_user_info_path);
 	return result;
@@ -123,8 +127,8 @@ bool CUserManager::Save()
 
 void CUserManager::SetWorkingFolder(std::shared_ptr<CUser> user)
 {
-	CString folder_path = _user_info_path.Left(_user_info_path.ReverseFind(_T('\\'))) + _T("Answers");
-	if (!FileSystem::FileExists(folder_path) && FileSystem::CreateFolderTree(folder_path))
+	CString folder_path = _user_info_path.Left(_user_info_path.ReverseFind(_T('\\'))) + _T("\\Answers");
+	if (!FileSystem::FileExists(folder_path) && !FileSystem::CreateFolderTree(folder_path))
 	{
 		//log
 		return;

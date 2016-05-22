@@ -3,6 +3,7 @@
 #include "afxcmn.h"
 #include "ScaleList.h"
 #include <memory>
+#include "AnswerManager.h"
 
 class CPsiScale;
 class CUser;
@@ -27,11 +28,12 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 private:
+	void GetTestInfoAndSetListInfo(std::vector<CString>& test_infos);
 	CMFCEditBrowseCtrl _working_folder_edit;
 public:
 	CString _working_folder;
 	afx_msg void OnEnChangeEditWorkingFolder();
-
+	afx_msg LRESULT OnScaleFinished(WPARAM, LPARAM);
 	virtual BOOL OnInitDialog() override;
 
 	virtual void OnOK() override;
@@ -41,6 +43,6 @@ public:
 	CScaleList _scale_list;
 	std::shared_ptr<CPsiScale> _scale;
 	CUser& _user;
-
+	CAnswerManager _answer_manager;
 	afx_msg void OnBnClickedStart();
 };
