@@ -31,6 +31,7 @@ bool CAnswerManager::AddAnswer(const CString& scale_name,
 	unsigned question_id, 
 	unsigned answer)
 {
+	_test_finished_info[scale_name] = false;
 	_answers[scale_name][question_id] = answer;
 	return true;
 }
@@ -191,8 +192,7 @@ bool CAnswerManager::Save(const CString& test_info_path)
 		auto scale_xml = xml.AddElement(XML_SCALE);
 		scale_xml->SetAttrib(XML_NAME, iter->first);
 		scale_xml->SetIntegerAttrib(XML_FINISHED, iter->second);
-		for_each(_answers.begin(), _answers.end(), [&, this](std::pair<CString, std::map<unsigned, unsigned>> item) {
-			this->SaveScaleItem(scale_xml, item.first); });
+		this->SaveScaleItem(scale_xml, iter->first);
 	}
 
 	return xml.Save(test_info_path);
