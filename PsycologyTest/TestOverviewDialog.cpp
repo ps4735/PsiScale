@@ -156,8 +156,13 @@ void CScaleOverviewDialog::OnBnClickedStart()
 	}
 	else
 	{
-		CPsycologyTestDlg dlg(_scale, _answer_manager, m_hWnd);
-		dlg.DoModal();
+		ShowWindow(SW_HIDE);
+		if (AfxMessageBox(_scale->GetPrologue(), MB_OKCANCEL) == IDOK)
+		{
+			CPsycologyTestDlg dlg(_scale, _answer_manager, m_hWnd);
+			dlg.DoModal();
+		}
+		ShowWindow(SW_SHOW);
 	}
 }
 
@@ -177,14 +182,7 @@ void CScaleOverviewDialog::OnLvnItemchangedListScales(NMHDR *pNMHDR, LRESULT *pR
 	CString state;
 	state = _scale_list.GetItemText(index, 1);
 
-	if (state == _T("完成"))
-	{
-		_start.EnableWindow(FALSE);
-	}
-	else
-	{
-		_start.EnableWindow(TRUE);
-	}
+	_start.EnableWindow(state != _T("完成"));
 
 	*pResult = 0;
 }
