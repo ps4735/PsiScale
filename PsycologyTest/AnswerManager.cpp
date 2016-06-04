@@ -14,6 +14,7 @@ namespace TestInfo
 	const TCHAR* XML_ITEM = _T("Item");
 	const TCHAR* XML_ID = _T("Id");
 	const TCHAR* XML_ANSWER = _T("Answer");
+	const TCHAR* XML_TIME = _T("Time");
 	const TCHAR* XML_SUBSCALES = _T("SubScales");
 	const TCHAR* XML_SUBSCALE = _T("SubScale");
 	const TCHAR* XML_SCORE = _T("Score");
@@ -29,10 +30,12 @@ CAnswerManager::~CAnswerManager()
 
 bool CAnswerManager::AddAnswer(const CString& scale_name, 
 	unsigned question_id, 
-	unsigned answer)
+	unsigned answer, 
+	unsigned time)
 {
 	_test_finished_info[scale_name] = false;
-	_answers[scale_name][question_id] = answer;
+	_answers[scale_name][question_id].answer = answer;
+	_answers[scale_name][question_id].time = time;
 	return true;
 }
 
@@ -49,7 +52,7 @@ unsigned CAnswerManager::GetAnswer(const CString& scale_name, unsigned question_
 		throw _T("Question not found.");
 	}
 
-	return question->second;
+	return question->second.answer;
 }
 
 bool CAnswerManager::IsAnswered(const CString& scale_name, unsigned question_id)
@@ -121,9 +124,16 @@ bool CAnswerManager::LoadScaleItem(Utilities::CXmlElement* scale_xml)
 	CString scale_name = scale_xml->GetAttrib(XML_NAME);
 	auto answers_element = scale_xml->GetElement(XML_ANSWERS);
 	auto answer_items = answers_element->GetChildElements();
-	std::map<unsigned int, unsigned int> answer_item;
+	std::map<unsigned int, Answer> answer_item;
 	for_each(answer_items.begin(), answer_items.end(), [&](Utilities::CXmlElement* item) {
-		answer_item.insert(std::make_pair(item->GetIntegerAttrib(XML_ID), item->GetIntegerAttrib(XML_ANSWER))); });
+		unsigned id = item->GetIntegerAttrib(XML_ID);
+		unsigned answer_name = item->GetIntegerAttrib(XML_ANSWER);
+		unsigned time = item->GetIntegerAttrib(XML_TIME);
+		Answer answer;
+		answer.answer = answer_name;
+		answer.time = time;
+		answer_item.insert(std::make_pair(id, answer));
+	});
 	_answers[scale_name] = answer_item;
 	auto subscales_element = scale_xml->GetElement(XML_SUBSCALES);
 	auto subscales_items = subscales_element->GetChildElements();
@@ -140,12 +150,14 @@ bool CAnswerManager::SaveScaleItem(Utilities::CXmlElement* scale_xml, const CStr
 
 	if (scale_iter != _answers.end())
 	{
-		auto answers_xml = scale_xml->AddElement(XML_ANSWERS);
-		for (auto iter = scale_iter->second.begin(); iter != scale_iter->second.end(); ++iter)
+		auto answers_xml = scale_xml->AddElement(XML_ANSWERS); 
+		int i = 0; 
+		for (auto iter = scale_iter->second.begin(); iter != scale_iter->second.end(); ++iter, ++i)
 		{
 			auto item = answers_xml->AddElement(XML_ITEM);
 			item->SetIntegerAttrib(XML_ID, iter->first);
-			item->SetIntegerAttrib(XML_ANSWER, iter->second);
+			item->SetIntegerAttrib(XML_ANSWER, iter->second.answer);
+			item->SetIntegerAttrib(XML_TIME, iter->second.time);
 		}
 	}
 

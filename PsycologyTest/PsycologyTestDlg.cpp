@@ -250,6 +250,7 @@ bool CPsycologyTestDlg::ShowQuestion(unsigned question_index)
 		_psi_scale->GetQuestionCount());
 
 	UpdateData(FALSE);
+	_start = clock();
 
 	return true;
 }
@@ -334,8 +335,12 @@ void CPsycologyTestDlg::OnBnClickedLast()
 
 void CPsycologyTestDlg::ProcessAnswer(unsigned int answer)
 {
+	_end = clock();
+
+	ASSERT(_end > _start);
+
 	// 1. 记录
-	_answer_manager.AddAnswer(_psi_scale->GetName(), _current_question_index, answer);
+	_answer_manager.AddAnswer(_psi_scale->GetName(), _current_question_index, answer, (_end - _start) * 1000 / CLOCKS_PER_SEC);
 	_answer_manager.SetScore(_psi_scale->GetName(), _psi_scale->GetQuestion(_current_question_index).GetGroup(), 0); // 分值定义尚未定义。
 	// 2. 下一道题。
 	if (_current_question_index < _psi_scale->GetQuestionCount() - 1)
@@ -352,6 +357,8 @@ void CPsycologyTestDlg::ProcessAnswer(unsigned int answer)
 			{
 				_answer_manager.FinishScale(_psi_scale->GetName());
 				::SendMessage(_notify_wnd, WM_SCALE_FINISHED, 0, 0);
+
+
 				__super::OnOK();
 			}
 		}
@@ -428,9 +435,6 @@ void CPsycologyTestDlg::AdjustSize(int last_button)
 
 	GetClientRect(&clientrect);  // client area of the dialog
 	GetWindowRect(&dlgrect);	  // rectangle of the dialog window
-
-								  // get height of the title bar
-								  //int offset = dlgrect.Width() - clientrect.right ;
 
 	CRect next_button_rect;
 	auto next_button = GetDlgItem(ID_NEXT);

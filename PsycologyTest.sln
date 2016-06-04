@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PsycologyTest", "PsycologyTest\PsycologyTest.vcxproj", "{363DD303-928C-4D66-9C0C-E35E3DA65216}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,6 +19,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PsiScaleEditor", "PsiScaleE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PsiCommon", "PsiCommon\PsiCommon.vcxproj", "{79217E5A-9BD3-4B53-A818-811BF5E452CC}"
 	ProjectSection(ProjectDependencies) = postProject
+		{E16DDA60-3E14-4E06-92DC-2F28832E7D88} = {E16DDA60-3E14-4E06-92DC-2F28832E7D88}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PsiAnswerViewer", "PsiAnswerViewer\PsiAnswerViewer.vcxproj", "{F875FC47-E1A5-4A6F-AB54-708B95280593}"
+	ProjectSection(ProjectDependencies) = postProject
+		{79217E5A-9BD3-4B53-A818-811BF5E452CC} = {79217E5A-9BD3-4B53-A818-811BF5E452CC}
 		{E16DDA60-3E14-4E06-92DC-2F28832E7D88} = {E16DDA60-3E14-4E06-92DC-2F28832E7D88}
 	EndProjectSection
 EndProject
@@ -60,6 +66,14 @@ Global
 		{79217E5A-9BD3-4B53-A818-811BF5E452CC}.Release|x64.Build.0 = Release|x64
 		{79217E5A-9BD3-4B53-A818-811BF5E452CC}.Release|x86.ActiveCfg = Release|Win32
 		{79217E5A-9BD3-4B53-A818-811BF5E452CC}.Release|x86.Build.0 = Release|Win32
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Debug|x64.ActiveCfg = Debug|x64
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Debug|x64.Build.0 = Debug|x64
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Debug|x86.ActiveCfg = Debug|Win32
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Debug|x86.Build.0 = Debug|Win32
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Release|x64.ActiveCfg = Release|x64
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Release|x64.Build.0 = Release|x64
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Release|x86.ActiveCfg = Release|Win32
+		{F875FC47-E1A5-4A6F-AB54-708B95280593}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

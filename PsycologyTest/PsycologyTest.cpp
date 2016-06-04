@@ -6,6 +6,8 @@
 #include "PsycologyTest.h"
 #include "TestOverviewDialog.h"
 #include "LogonDialog.h"
+#include "PersonalInfoDialog.h"
+#include "User.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -63,13 +65,25 @@ BOOL CPsycologyTestApp::InitInstance()
 
 	for (;;)
 	{
-		CLogonDialog dlg;
+		CLogonDialog logon_dlg;
 
-		INT_PTR nResponse = dlg.DoModal();
+		INT_PTR nResponse = logon_dlg.DoModal();
 		if (nResponse == IDOK)
 		{
-			CScaleOverviewDialog overview_dialog(*dlg.GetUser());
-//			m_pMainWnd = &overview_dialog;
+			if (logon_dlg.IsFirstTime())
+			{
+				CPersonalInfoDialog info_dlg;
+				if (info_dlg.DoModal() == IDOK)
+				{
+					logon_dlg.GetUser()->SetInfo(info_dlg.GetInfo());
+				}
+				else
+				{
+					continue;
+				}
+			}
+			CScaleOverviewDialog overview_dialog(*logon_dlg.GetUser());
+
 			overview_dialog.DoModal();
 		}
 		else if (nResponse == IDCANCEL)

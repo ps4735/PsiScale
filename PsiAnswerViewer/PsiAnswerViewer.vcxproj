@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{363DD303-928C-4D66-9C0C-E35E3DA65216}</ProjectGuid>
-    <RootNamespace>PsycologyTest</RootNamespace>
+    <ProjectGuid>{F875FC47-E1A5-4A6F-AB54-708B95280593}</ProjectGuid>
+    <RootNamespace>PsiAnswerViewer</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
@@ -91,11 +91,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>$(Solutiondir)debug\utilities.lib;$(Solutiondir)debug\psiCommon.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(Solutiondir)debug\utilities.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -114,7 +113,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -138,7 +136,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -164,7 +161,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,57 +182,37 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnswerManager.h" />
-    <ClInclude Include="LogonDialog.h" />
-    <ClInclude Include="PersonalInfoDialog.h" />
-    <ClInclude Include="PsycologyTest.h" />
-    <ClInclude Include="PsycologyTestDlg.h" />
+    <ClInclude Include="PsiAnswerViewer.h" />
+    <ClInclude Include="PsiAnswerViewerDlg.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="ScaleList.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TestOverviewDialog.h" />
-    <ClInclude Include="User.h" />
-    <ClInclude Include="UserManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnswerManager.cpp" />
-    <ClCompile Include="LogonDialog.cpp" />
-    <ClCompile Include="PersonalInfoDialog.cpp" />
-    <ClCompile Include="PsycologyTest.cpp" />
-    <ClCompile Include="PsycologyTestDlg.cpp" />
-    <ClCompile Include="ScaleList.cpp" />
+    <ClCompile Include="PsiAnswerViewer.cpp" />
+    <ClCompile Include="PsiAnswerViewerDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestOverviewDialog.cpp" />
-    <ClCompile Include="User.cpp" />
-    <ClCompile Include="UserManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="PsycologyTest.rc" />
+    <ResourceCompile Include="PsiAnswerViewer.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\PsycologyTest.rc2" />
+    <None Include="res\PsiAnswerViewer.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\PsycologyTest.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="ScoreTemplate.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Manifest Include="res\PsycolgyTest.manifest" />
+    <Image Include="res\PsiAnswerViewer.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="PsycologyTest.rc" />
+      <UserProperties RESOURCE_FILE="PsiAnswerViewer.rc" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

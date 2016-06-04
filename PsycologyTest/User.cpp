@@ -58,3 +58,13 @@ const CString& CUser::GetWorkingFolder() const
 {
 	return _working_folder;
 }
+
+const PersonalInfo& CUser::GetInfo() const
+{
+	return _info;
+}
+
+void CUser::SetInfo(const PersonalInfo& info)
+{
+	_info = info;
+}

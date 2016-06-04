@@ -10,6 +10,7 @@
 #include "PsycologyTestDlg.h"
 #include <algorithm>
 #include "User.h"
+#include "PersonalInfoDialog.h"
 
 using namespace std;
 
@@ -48,6 +49,7 @@ BEGIN_MESSAGE_MAP(CScaleOverviewDialog, CDialogEx)
 	ON_BN_CLICKED(IDC_START, &CScaleOverviewDialog::OnBnClickedStart)
 	ON_MESSAGE(WM_SCALE_FINISHED, OnScaleFinished)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_SCALES, &CScaleOverviewDialog::OnLvnItemchangedListScales)
+	ON_BN_CLICKED(IDC_MODIFY_PERSONAL_INFO, &CScaleOverviewDialog::OnBnClickedModifyPersonalInfo)
 END_MESSAGE_MAP()
 
 
@@ -162,6 +164,8 @@ void CScaleOverviewDialog::OnBnClickedStart()
 			CPsycologyTestDlg dlg(_scale, _answer_manager, m_hWnd);
 			dlg.DoModal();
 		}
+
+		_answer_manager.Save(_user.GetWorkingFolder() + _T("\\") + _user.GetUid() + _T(".xml"));
 		ShowWindow(SW_SHOW);
 	}
 }
@@ -185,4 +189,16 @@ void CScaleOverviewDialog::OnLvnItemchangedListScales(NMHDR *pNMHDR, LRESULT *pR
 	_start.EnableWindow(state != _T("Íê³É"));
 
 	*pResult = 0;
+}
+
+
+void CScaleOverviewDialog::OnBnClickedModifyPersonalInfo()
+{
+	CPersonalInfoDialog dlg;
+	dlg.SetInfo(_user.GetInfo());
+
+	if (dlg.DoModal() == IDOK)
+	{
+		_user.SetInfo(dlg.GetInfo());
+	}
 }

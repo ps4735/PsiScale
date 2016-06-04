@@ -61,6 +61,10 @@ protected:
 
 	CString _timer_text;
 	unsigned int _timer;
+
+	clock_t _start;
+	clock_t _end;
+	
 public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();

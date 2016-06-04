@@ -125,6 +125,11 @@ std::shared_ptr<CUser> CLogonDialog::GetUser()
 	return _user;
 }
 
+bool CLogonDialog::IsFirstTime() const
+{
+	return _first_time != FALSE;
+}
+
 BOOL CLogonDialog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();

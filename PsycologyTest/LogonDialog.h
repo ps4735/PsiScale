@@ -30,6 +30,7 @@ public:
 
 	void RunScale(std::shared_ptr<CUser> user);
 	std::shared_ptr<CUser> GetUser();
+	bool IsFirstTime() const;
 
 private:
 	std::shared_ptr<CUserManager> _user_manager;

@@ -195,7 +195,6 @@
   <ItemGroup>
     <ClCompile Include="ChoiceList.cpp" />
     <ClCompile Include="GroupList.cpp" />
-    <ClCompile Include="InputStringDialog.cpp" />
     <ClCompile Include="PsiScaleEditor.cpp" />
     <ClCompile Include="PsiScaleEditorDlg.cpp" />
     <ClCompile Include="QuestionEditorDlg.cpp" />
